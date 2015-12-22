@@ -1,4 +1,4 @@
-/*
+/**
  * dictionary.c
  *
  * Implementations of dictionary functionalities for Trie based API

@@ -1,5 +1,4 @@
 /**
- *
  * dictionary.h
  * 
  * Header file with the functionality of the dictionary.
