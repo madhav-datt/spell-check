@@ -2,13 +2,16 @@
  * dictionary.h
  * 
  * Header file with the functionality of the dictionary.
- * Trie based Dictionary API
+ * Trie based Dictionary library.
  *
  * LENGTH - store maximum permitted word length
  * load - load dictionary into memory
  * check - check if a word is present in the dictionary
  * size - give number of words in dictionary
  * unload - unload dictionary to free memory
+ *
+ * Copyright (C)   2015    Madhav Datt
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  */
 

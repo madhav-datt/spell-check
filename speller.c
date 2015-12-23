@@ -3,6 +3,10 @@
  *
  * Implements spell-checker.
  * Checks spelling of text document contents word-by-word.
+ * Autocorrects incorrectly spelled words.
+ *
+ * Copyright (C)   2015    Madhav Datt
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  */
 
@@ -82,7 +86,7 @@ int main (int argc, char* argv[])
     printf ("\nMisspelled Words\n\n");
 
     // Prepare to spell-check
-    int index = 0, misspellings = 0, words = 0;
+    int index = 0, misspellings = 0, num_words = 0;
     char word[LENGTH + 1];
 
     // Spell-check each word in text
@@ -123,15 +127,7 @@ int main (int argc, char* argv[])
             word[index] = '\0';
 
             // Update counter
-            words++;
-
-            //
-            // TODO: Implement 's checks
-            //
-            //
-            //
-            //
-            //
+            num_words++;
 
             // Check word's spelling
             getrusage (RUSAGE_SELF, &before);

@@ -1,12 +1,16 @@
 /**
  * dictionary.c
  *
- * Implementations of dictionary functionalities for Trie based API
+ * Implementations of dictionary library functionalities
  *
  * load - load dictionary into memory
  * check - check if a word is present in the dictionary
  * size - give number of words in dictionary
  * unload - unload dictionary to free memory
+ * unload_rec - recursively unload children nodes from trie
+ *
+ * Copyright (C)   2015    Madhav Datt
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  */
 
