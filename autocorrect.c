@@ -8,6 +8,14 @@
  *
  */
 
+/**
+ * TODO:
+ * 1. Implement text file to store hash values and word frequency. 
+ * 2. Read from file if present, and load into hash table to save time.
+ * 3. Consider words with hash values with frequency > 1 and Edit Distance = 2.
+ *
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
@@ -27,7 +35,8 @@
  */
 #define TABLE_SIZE 800011
 
-int* words_hash_table;
+// Hash table for words from word data file
+int* words_hash_table = NULL;
 
 /**
  *
@@ -58,7 +67,7 @@ bool hash_words (void)
 	FILE* word_data_fp;
 	word_data_fp = fopen (WORD_DATA, "r");
 
-	// Word date file not opened
+	// File not opened
     if (word_data_fp == NULL)
         return false;
 
@@ -70,8 +79,8 @@ bool hash_words (void)
         return false; 
     }
 
+    // Smoothing Process - assume word count 1 for each unseen word
     for (int i = 0; i < TABLE_SIZE; i++)
-        // Smoothing Process - assume word count 1 for each unseen word
         words_hash_table[i] = 1;
 
   	// Prepare to read words from word data file
@@ -131,4 +140,73 @@ bool hash_words (void)
 
 	fclose (word_data_fp);
 	return false;
+}
+
+
+/**
+ *
+ * Edit distance between two words: the number of edits it would take to turn one into the other
+ * Can be deletion (remove one letter), transposition (swap adjacent letters), 
+ * alteration (change one letter to another) or insertion (add a letter)
+ *
+ * Find words with edit distance = 1
+ * Return word with highest probability value as per words_hash_table
+ *
+ */
+ void correct (const char* word)
+ {
+    int word_len = strlen (word);
+    char word_edit_dist1 [LENGTH_MAX + 1];
+    int word_edit_dist1_prob;
+
+    // Correct replacement for incorrect word
+    char word_cor [LENGTH_MAX + 1];
+    strcpy (word_cor, word_edit_dist1);
+    int word_cor_prob = 1;
+
+    // Deletions (remove one letter)
+    for (int i = 0; i < word_len; i++)
+    {
+        // Word with letter at i-th index removed
+        for (int j = 0; j < i; j++)
+            word_edit_dist1[j] = word[j];
+
+        for (int j = i + 1; j < word_len; j++)
+            word_edit_dist1[j - 1] = word[j];
+
+        // Terminate word
+        word_edit_dist1[word_len - 1] = '\0';
+
+        // Choose word with highest probability value as per words_hash_table
+        word_edit_dist1_prob = words_hash_table[hash (word_edit_dist1)];
+        if (word_edit_dist1_prob > word_cor_prob)
+        {
+            strcpy (word_cor, word_edit_dist1);
+            word_cor_prob = word_edit_dist1_prob;
+        }
+    }
+
+    // Transposition (swap adjacent letters)
+    for (int i = 0; i < word_len - 1; i++)
+    {
+        char tmp;
+
+        // Swap letters word[i] and word[i + 1]
+        strcpy (word_edit_dist1, word);
+
+        tmp = word_edit_dist1[i + 1];
+        word_edit_dist1[i + 1] = word_edit_dist1[i];
+        word_edit_dist1[i] = tmp;
+
+        // Choose word with highest probability value as per words_hash_table
+        word_edit_dist1_prob = words_hash_table[hash (word_edit_dist1)];
+        if (word_edit_dist1_prob > word_cor_prob)
+        {
+            strcpy (word_cor, word_edit_dist1);
+            word_cor_prob = word_edit_dist1_prob;
+        }
+    }
+
+    // Alteration (change one letter to another)
+    // Insertion (add a letter)
 }

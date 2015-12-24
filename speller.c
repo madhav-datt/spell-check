@@ -32,6 +32,7 @@ int main (int argc, char* argv[])
 {
     char* dictionary;
     char* text;
+    char autocorrect;
 
     // Check for correct number of args
     if (argc != 2 && argc != 3)
@@ -45,6 +46,11 @@ int main (int argc, char* argv[])
 
     // Benchmarks for function times
     double time_load = 0.0, time_check = 0.0, time_size = 0.0, time_unload = 0.0;
+
+    // Turn autocorrect on
+    printf ("Turn on autocorrect? [Y/n]: ");
+    scanf ("%c", autocorrect);
+    printf("\n");
 
     // Determine dictionary and text file to use
     if (argc == 3)
