@@ -1,40 +1,48 @@
 #
-# Makefile
+# Makefile for spellcheck program
+# Typing 'make' or 'make spellcheck' will create the executable file.
 #
-# Spellcheck program
+# Copyright (C)   2015    Madhav Datt
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
-
 
 # compiler to use
+#
 CC = gcc
 
-# flags to pass compiler
-CFLAGS = -ggdb3 -O0 -std=c99 -Wall -Werror -g
+# flags t0 pass compiler
+#
+CFLAGS  = -ggdb3 -O0 -std=c99 -Wall -Werror -g
 
-# name for executable
-EXE = speller
+# target executable name
+#
+default: spellcheck
 
-# space-separated list of header files
-HDRS = dictionary.h
+# for executable file spellcheck 
+# object files are speller.o, dictionary.o, autocorrect.o:
+#
+spellcheck:  speller.o dictionary.o autocorrect.o 
+	$(CC) $(CFLAGS) -o spellcheck speller.o dictionary.o autocorrect.o
 
-# space-separated list of libraries, if any,
-# each of which should be prefixed with -l
-LIBS =
+# for object file speller.o
+# source files speller.c, dictionary.h, autocorrect.h:
+#
+speller.o:  speller.c dictionary.h autocorrect.h 
+	$(CC) $(CFLAGS) -c speller.c
 
-# space-separated list of source files
-SRCS = speller.c dictionary.c
+# for object file dictionary.o
+# source files dictionary.c and dictionary.h:
+#
+dictionary.o:  dictionary.c dictionary.h 
+	$(CC) $(CFLAGS) -c dictionary.c
 
-# automatically generated list of object files
-OBJS = $(SRCS:.c=.o)
+# for object file autocorrect.o
+# source files autocorrect.c and autocorrect.h:
+#
+autocorrect.o:  autocorrect.c autocorrect.h 
+	$(CC) $(CFLAGS) -c autocorrect.c
 
-
-# default target
-$(EXE): $(OBJS) $(HDRS) Makefile
-	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBS)
-
-# dependencies 
-$(OBJS): $(HDRS) Makefile
-
-# cleaning up the directory
-clean:
-	rm -f core $(EXE) *.o
+# remove old *.o object files and *~ backup files:
+#
+clean: 
+	$(RM) count *.o *~

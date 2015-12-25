@@ -10,6 +10,12 @@
  *
  */
 
+/**
+ * TODO:
+ * 1. Implement automatic replacement of misspelled words with corrected spellings in text file. 
+ *
+ */
+
 #include <ctype.h>
 #include <stdio.h>
 #include <sys/resource.h>
@@ -17,6 +23,8 @@
 #include <stdlib.h>
 
 #include "dictionary.h"
+#include "autocorrect.h"
+
 #undef calculate
 #undef getrusage
 
@@ -32,25 +40,22 @@ int main (int argc, char* argv[])
 {
     char* dictionary;
     char* text;
-    char autocorrect;
 
     // Check for correct number of args
     if (argc != 2 && argc != 3)
     {
-        printf("Usage: speller [dictionary_file] text_file\n");
+        printf("Usage: spellcheck [dictionary_file] text_file\n");
         return 1;
     }
 
     // Structs for timing data
     struct rusage before, after;
 
-    // Benchmarks for function times
+    // Benchmarks for dictionary function times
     double time_load = 0.0, time_check = 0.0, time_size = 0.0, time_unload = 0.0;
 
-    // Turn autocorrect on
-    printf ("Turn on autocorrect? [Y/n]: ");
-    scanf ("%c", autocorrect);
-    printf("\n");
+    // Benchmarks for autocorrect function times
+    double time_correct = 0.0, time_load_table = 0.0, time_unload_table = 0.0;
 
     // Determine dictionary and text file to use
     if (argc == 3)
@@ -68,7 +73,7 @@ int main (int argc, char* argv[])
     // Load dictionary
     getrusage (RUSAGE_SELF, &before);
     bool loaded = load (dictionary);
-    getrusage (RUSAGE_SELF, &after);
+    getrusage (RUSAGE_SELF, &after);   
 
     // Abort if dictionary not loaded
     if (!loaded)
@@ -80,11 +85,27 @@ int main (int argc, char* argv[])
     // Calculate time to load dictionary
     time_load = calculate (&before, &after);
 
+    // Load word data
+    getrusage (RUSAGE_SELF, &before);
+    bool loaded_table = hash_words ();
+    getrusage (RUSAGE_SELF, &after);
+
+    // Calculate time to load word data
+    time_load_table = calculate (&before, &after);
+
+    // Abort if word data not loaded
+    if (!loaded_table)
+    {
+        printf ("Could not load word data file.\n");
+        return 1;
+    }
+
     FILE* text_file = fopen (text, "r");
     if (text_file == NULL)
     {
         printf ("Could not open text file - %s.\n", text);
         unload ();
+        unload_table ();
         return 1;
     }
 
@@ -146,7 +167,19 @@ int main (int argc, char* argv[])
             // Print word if misspelled
             if (misspelled)
             {
-                printf ("%s\n", word);
+                // Check word's correction
+                getrusage (RUSAGE_SELF, &before);
+                char* word_corrected = correct_word (word);
+                getrusage (RUSAGE_SELF, &after);
+
+                // Update benchmark
+                time_correct += calculate (&before, &after);
+
+                if (word_corrected == NULL)
+                    printf ("%-45s\tNo suggested correction\n", word);
+                else
+                    printf ("%-45s\tSuggested Correction: %s\n", word, word_corrected);
+
                 misspellings++;
             }
 
@@ -161,6 +194,7 @@ int main (int argc, char* argv[])
         fclose (text_file);
         printf ("Error reading %s.\n", text);
         unload ();
+        unload_table ();
         return 1;
     }
 
@@ -190,15 +224,33 @@ int main (int argc, char* argv[])
     // Calculate time to unload dictionary
     time_unload = calculate(&before, &after);
 
+    // Unload word data file
+    getrusage (RUSAGE_SELF, &before);
+    bool unloaded_table = unload_table ();
+    getrusage (RUSAGE_SELF, &after);
+
+    // Abort if word data not unloaded
+    if (!unloaded_table)
+    {
+        printf ("Could not unload word data file.\n");
+        return 1;
+    }
+
+    // Calculate time to unload word data
+    time_unload_table = calculate(&before, &after);
+
     // Report benchmarks
     printf ("\nWORDS MISSPELLED:                        %d\n", misspellings);
     printf ("WORDS IN DICTIONARY:                     %d\n", n);
-    printf ("WORDS IN TEXT:                           %d\n", words);
+    printf ("WORDS IN TEXT:                           %d\n", num_words);
     printf ("Time in loading dictionary file:         %.2f seconds\n", time_load);
     printf ("Time in checking text:                   %.2f seconds\n", time_check);
     printf ("Time in finding size of dictionary:      %.2f seconds\n", time_size);
-    printf ("Time in unloading dictionary file:       %.2f seconds\n", time_unload);
-    printf ("TIME IN TOTAL:                           %.2f seconds\n\n", time_load + time_check + time_size + time_unload);
+    printf ("Time in unloading dictionary:            %.2f seconds\n", time_unload);
+    printf ("Time in loading word data:               %.2f seconds\n", time_load_table);
+    printf ("Time in correcting text:                 %.2f seconds\n", time_correct);
+    printf ("Time in unloading word data:             %.2f seconds\n", time_unload_table);
+    printf ("TIME IN TOTAL:                           %.2f seconds\n\n", time_load + time_check + time_size + time_unload + time_load_table + time_correct + time_unload_table);
 
     return 0;
 }
