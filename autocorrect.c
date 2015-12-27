@@ -86,7 +86,7 @@ bool hash_words (void)
 
     // Smoothing Process - assume word count 1 for each unseen word
     for (int i = 0; i < TABLE_SIZE; i++)
-        words_hash_table[i] = 1;
+        words_hash_table[i] = 0;
 
   	// Prepare to read words from word data file
     int index = 0;
@@ -95,11 +95,11 @@ bool hash_words (void)
     // Hash each word in text
     for (int c = fgetc (word_data_fp); c != EOF; c = fgetc (word_data_fp))
     {
-        // Allow only alphabetical characters and apostrophes
+        // Allow only lowercase alphabetical characters and apostrophes
         if (isalpha (c) || (c == '\'' && index > 0))
         {
             // Append character to word
-            word[index] = c;
+            word[index] = tolower (c);
             index++;
 
             // Ignore alphabetical strings too long to be words
@@ -134,13 +134,6 @@ bool hash_words (void)
             // Prepare for next word
             index = 0;
         }
-    }
-
-    //testhashtable
-    for (int ki = 0; ki < 800011; ki++)
-    {
-        if (words_hash_table[ki] > 1)
-            printf("%d  %d\n",ki, words_hash_table[ki]);
     }
 
     // If end of file not reached before loop termination and error indicator is not set

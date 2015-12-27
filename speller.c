@@ -119,11 +119,11 @@ int main (int argc, char* argv[])
     // Spell-check each word in text
     for (int c = fgetc (text_file); c != EOF; c = fgetc (text_file))
     {
-        // Allow only alphabetical characters and apostrophes
+        // Allow only lowercase alphabetical characters and apostrophes
         if (isalpha (c) || (c == '\'' && index > 0))
         {
             // Append character to word
-            word[index] = c;
+            word[index] = tolower (c);
             index++;
 
             // Ignore alphabetical strings too long to be words
@@ -176,9 +176,9 @@ int main (int argc, char* argv[])
                 time_correct += calculate (&before, &after);
 
                 if (word_corrected == NULL)
-                    printf ("%-45s\tNo suggested correction\n", word);
+                    printf ("%-45s No suggested correction\n", word);
                 else
-                    printf ("%-45s\tSuggested Correction: %s\n", word, word_corrected);
+                    printf ("%-45s Suggested Correction: %s\n", word, word_corrected);
 
                 misspellings++;
             }
