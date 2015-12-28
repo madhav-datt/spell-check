@@ -2,6 +2,7 @@
  * autocorrect.c
  *
  * Implementation of autocorrect library functionalities
+ * Based on a probabilistic model for word correction
  * 
  * hash - hash function djb2 by Dan Bernstein
  * hash_words - add words and frequencies to hash table
@@ -17,9 +18,8 @@
 
 /**
  * TODO:
- * 1. Implement text file to store hash values and word frequency. 
- * 2. Read from file if present, and load into hash table to save time.
- * 3. Consider word hash values with frequency > 1 and Edit Distance = 2.
+ * 1. Consider word hash values with frequency > 1 and Edit Distance = 2.
+ * 2. Optimize for space.
  *
  */
 
@@ -43,27 +43,72 @@
 // Hash table for words from word data file
 int* words_hash_table = NULL;
 
+// Define each node of the trie with 27 children nodes
+typedef struct node
+{
+    bool is_word;
+    int frequency;
+    
+    // 0-25 for lowercase a-z, 26 for apostrophe (')
+    struct node* next[27]; 
+} node;
+
+// Initialize trie to hold word data and frequencies in memory
+node* word_freq = NULL;
+
 /**
  *
- * Hash function for word data strings
- * djb2 by Dan Bernstein <http://cr.yp.to/djb.html>
+ * Checks if word is present in word data trie.
+ * Returns word frequency if word is in present in trie, else returns 0.
  *
  */
-unsigned long hash (char *str)
+int check_word_frequency (const char* word)
 {
-    unsigned long hash = 5381;
-    int c;
+    int index, freq;
+    node* tmp = word_freq;
 
-    while ((c = *str++))
-        // hash * 33 + c
-        hash = ((hash << 5) + hash) + c; 
+    int word_len = strlen (word);
 
-    return (hash % TABLE_SIZE);
+    for (int i = 0; i < word_len; i++)
+    {
+        // Check if word is not just a prefix of a dictionary word
+        if (i == word_len - 1)
+        {
+            if (tmp -> is_word != true)
+                return 0;
+            
+            freq = tmp -> frequency;
+        }
+
+
+        // Handle ' as a special character
+        if (word[i] == '\'')
+            index = 26;
+
+        // Handle letters of the alphabet
+        // Index between 0 - 25
+        else
+            index = (int)tolower (word[i]) - 'a';
+
+        // Handle error cases
+        if (index > 26 || index < 0)
+            continue;
+        
+        // Check for character in trie
+        if (tmp -> next[index] == NULL)
+            return 0;
+
+        else
+            tmp = tmp -> next[index];
+    }
+
+    return freq;
 }
+
 
 /**
  *
- * Loads word frequency data from file into hash table. 
+ * Loads word frequency data from file into trie data structure. 
  * Returns true if successful else false.
  *
  */
@@ -76,23 +121,23 @@ bool hash_words (void)
     if (word_data_fp == NULL)
         return false;
 
-    // Initialize hash table
-    // words_hash_table[hash (word)] holds word frequency of "word" in text
-    if ((words_hash_table = calloc (TABLE_SIZE, sizeof (int))) == NULL)
+    // Initialize trie for dictionary
+    if ((word_freq = calloc (1, sizeof (node))) == NULL)
     {
         printf ("Out of memory. Dictionary could not be loaded.\n");
-        return false; 
+        return false;            
     }
+    for (int i = 0; i < 27; i++)
+        word_freq -> next[i] = NULL;
 
-    // Smoothing Process - assume word count 1 for each unseen word
-    for (int i = 0; i < TABLE_SIZE; i++)
-        words_hash_table[i] = 0;
+    int trie_index;
+    node* tmp = word_freq;
 
   	// Prepare to read words from word data file
     int index = 0;
     char word[LENGTH_MAX + 1];
 
-    // Hash each word in text
+    // Load each word in text to trie
     for (int c = fgetc (word_data_fp); c != EOF; c = fgetc (word_data_fp))
     {
         // Allow only lowercase alphabetical characters and apostrophes
@@ -123,13 +168,66 @@ bool hash_words (void)
             index = 0;
         }
 
-        // Whole word found - increase count in hash table
+        // Whole word found
         else if (index > 0)
         {
             // Terminate current word string
             word[index] = '\0';
 
-            words_hash_table[hash (word)]++;
+            char* word_str = word;
+            int word_len = strlen (word_str);
+
+            // Add found word to trie and update frequency value
+            for (int i = 0; i < word_len; i++)
+            {
+                // Set word as present in dictionary
+                if (i == word_len - 1)
+                {
+                    // Increase frequency if already present
+                    if (tmp -> is_word == true)
+                        tmp -> frequency ++;
+
+                    // Set as present otherwise
+                    else
+                    {
+                        tmp -> is_word = true;
+                        tmp -> frequency = 1;
+                    }
+                }
+                    
+
+                // Handle ' as a special character
+                if (word_str[i] == '\'')
+                    trie_index = 26;
+
+                // Handle letters of the alphabet
+                // Neglect character case
+                else if (isalpha (word_str[i]))
+                    trie_index = (int)tolower (word_str[i]) - 'a';
+
+                // Handle error cases
+                if (trie_index > 26 || trie_index < 0)
+                    continue;
+
+                // Insert character from word read from dictionary into Trie
+                if (tmp -> next[trie_index] == NULL)
+                {
+                    // Create and initialize new next nodes for subsequent letter
+                    if ((tmp -> next[trie_index] = calloc (1, sizeof (node))) == NULL)
+                    {
+                        printf ("Out of memory. Dictionary could not be loaded.\n");
+                        return false;
+                    }
+                    tmp = tmp -> next[trie_index];
+                    for (int j = 0; j < 27; j++)
+                    {
+                        tmp -> is_word = false;
+                        tmp -> next[j] = NULL;
+                    }     
+                }
+                else
+                    tmp = tmp -> next[trie_index];
+            }
 
             // Prepare for next word
             index = 0;
@@ -159,16 +257,17 @@ char* word_cor = NULL;
  * Finds words with edit distance = 1
  * Returns word with highest probability value as per words_hash_table as suggested
  * correction for misspelled word.
+ * Returns NULL in case of error.
  *
  */
- char* correct_word (const char* word)
- {
+char* correct_word (const char* word)
+{
     int word_len = strlen (word);
     char word_edit_dist1 [LENGTH_MAX + 2];
     int word_edit_dist1_prob;
 
     // Intialize correct word string
-    if ((word_cor = calloc(LENGTH_MAX + 2, sizeof (char))) == NULL)
+    if ((word_cor = calloc (LENGTH_MAX + 2, sizeof (char))) == NULL)
     {
         printf ("Out of memory. Autocorrect could not be run.\n");
         return NULL; 
@@ -190,8 +289,8 @@ char* word_cor = NULL;
         // Terminate word
         word_edit_dist1[word_len - 1] = '\0';
 
-        // Choose word with highest probability value as per words_hash_table
-        word_edit_dist1_prob = words_hash_table[hash (word_edit_dist1)];
+        // Choose word with highest probability value as per word data frequency trie
+        word_edit_dist1_prob = check_word_frequency (word_edit_dist1);
         if (word_edit_dist1_prob > word_cor_prob)
         {
             strcpy (word_cor, word_edit_dist1);
@@ -212,8 +311,8 @@ char* word_cor = NULL;
         word_edit_dist1[i + 1] = word_edit_dist1[i];
         word_edit_dist1[i] = tmp;
 
-        // Choose word with highest probability value as per words_hash_table
-        word_edit_dist1_prob = words_hash_table[hash (word_edit_dist1)];
+        // Choose word with highest probability value as per word data frequency trie
+        word_edit_dist1_prob = check_word_frequency (word_edit_dist1);
         if (word_edit_dist1_prob > word_cor_prob)
         {
             strcpy (word_cor, word_edit_dist1);
@@ -240,8 +339,8 @@ char* word_cor = NULL;
             // Terminate word
             word_edit_dist1[word_len] = '\0';
 
-            // Choose word with highest probability value as per words_hash_table
-            word_edit_dist1_prob = words_hash_table[hash (word_edit_dist1)];
+            // Choose word with highest probability value as per word data frequency trie
+            word_edit_dist1_prob = check_word_frequency (word_edit_dist1);
             if (word_edit_dist1_prob > word_cor_prob)
             {
                 strcpy (word_cor, word_edit_dist1);
@@ -266,8 +365,8 @@ char* word_cor = NULL;
             for (int j = i; j < word_len; j++)
                 word_edit_dist1[j + 1] = word[j];
 
-            // Choose word with highest probability value as per words_hash_table
-            word_edit_dist1_prob = words_hash_table[hash (word_edit_dist1)];
+            // Choose word with highest probability value as per word data frequency trie
+            word_edit_dist1_prob = check_word_frequency (word_edit_dist1);
             if (word_edit_dist1_prob > word_cor_prob)
             {
                 strcpy (word_cor, word_edit_dist1);
@@ -281,17 +380,34 @@ char* word_cor = NULL;
 
 /**
  *
- * Unloads word hash table from memory.  Returns true if successful.
+ * Recursive function to unload trie from memory.
+ *
+ */
+bool unload_recr (node* dict_rem)
+{
+    node* tmp = dict_rem;
+
+    // Recursively freeing allocated memory
+    for (int i = 0; i < 27; i++)
+        if (tmp -> next[i] != NULL)
+            unload_recr (tmp -> next[i]);
+
+    free (tmp);
+    tmp = NULL;
+    
+    return true;
+}
+
+/**
+ *
+ * Unloads word data from memory.  Returns true if successful else false.
  * Frees allocated memory blocks.
  *
  */
- bool unload_table (void)
- {
-    free (words_hash_table);
-    words_hash_table = NULL;
-
+bool unload_words (void)
+{
     free (word_cor);
     word_cor = NULL;
 
-    return true;
- }
+    return 1;//unload_recr (word_freq);
+}

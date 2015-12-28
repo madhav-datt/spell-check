@@ -45,4 +45,4 @@ autocorrect.o:  autocorrect.c autocorrect.h
 # remove old *.o object files and *~ backup files:
 #
 clean: 
-	$(RM) count *.o *~
+	$(RM) spellcheck *.o *~

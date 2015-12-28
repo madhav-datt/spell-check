@@ -96,7 +96,7 @@ bool load (const char* dictionary)
         printf ("Out of memory. Dictionary could not be loaded.\n");
         return false;            
     }
-    for (int i = 0; i < 26; i++)
+    for (int i = 0; i < 27; i++)
         dict -> next[i] = NULL;
 
 	int index;
@@ -146,7 +146,7 @@ bool load (const char* dictionary)
                     return false;
                 }
                 tmp = tmp -> next[index];
-                for (int j = 0; j < 26; j++)
+                for (int j = 0; j < 27; j++)
                     tmp -> next[j] = NULL;
             }
             else

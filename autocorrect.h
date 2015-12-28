@@ -44,6 +44,6 @@ char* correct_word (const char* word);
  * Frees allocated memory blocks.
  *
  */
-bool unload_table (void);
+bool unload_words (void);
 
 #endif // AUTOCORRECT_H

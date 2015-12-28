@@ -105,7 +105,7 @@ int main (int argc, char* argv[])
     {
         printf ("Could not open text file - %s.\n", text);
         unload ();
-        unload_table ();
+        unload_words ();
         return 1;
     }
 
@@ -194,7 +194,7 @@ int main (int argc, char* argv[])
         fclose (text_file);
         printf ("Error reading %s.\n", text);
         unload ();
-        unload_table ();
+        unload_words ();
         return 1;
     }
 
@@ -226,7 +226,7 @@ int main (int argc, char* argv[])
 
     // Unload word data file
     getrusage (RUSAGE_SELF, &before);
-    bool unloaded_table = unload_table ();
+    bool unloaded_table = unload_words ();
     getrusage (RUSAGE_SELF, &after);
 
     // Abort if word data not unloaded
