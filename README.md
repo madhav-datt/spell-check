@@ -24,4 +24,12 @@ Autocorrect Library - probabilistic model based word spelling corrections. C lan
 Include the following header file in your program:
 
     #include "/Downloads/autocorrect-lib.v1.0/lib/autocorrect.h"
+    
+## TODOs
+
+* Autocorrect error correction probability improvement.
+    * Take into account words with 2 corrections instead of 1.
+    * Consider word hash values with frequency > 1 and Edit Distance = 2.
+
+* Optimize library for space. Currently, consumes a lot of memory.
 
