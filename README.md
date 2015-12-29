@@ -1,4 +1,27 @@
 # autocorrect-lib
-Autocorrect Library - probabilistic model based word spelling corrections. 
+Autocorrect Library - probabilistic model based word spelling corrections. C language Dictionary Library designed to use the English dictionary in Trie data structures for fast autocorrection of incorrectly spelled words.
 
-**This library is not completely functional yet.**
+## Library Contents and Functions
+
+* `bool hash_words (void)` - Loads word frequency data from file into hash table. Returns true if successful else false.
+* `char* correct_word (const char* word)` - Returns word with highest probability value as per words_hash_table as suggested correction for misspelled word.
+* `bool unload_words (void)` - Unloads word frequency data from memory.  Returns true if successful else false.
+
+### Using Probability based correction
+
+`char* correct_word (const char* word)` finds words with edit distance = 1 and returns word with highest probability value as per words_hash_table as suggested correction for misspelled word. Edit distance between two words: number of edits to turn one into the other. Can be deletion (remove one letter), transposition (swap adjacent letters), alteration (change one letter to another) or insertion (add a letter).
+
+## Using the library
+
+### Downloading the library
+
+    $ wget https://github.com/madhav-datt/autocorrect-lib/archive/autocorrect-lib.v1.0.zip
+    $ unzip autocorrect-lib.v1.0.zip
+    $ rm -f autocorrect-lib.v1.0.zip
+
+### Using the library in a program
+
+Include the following header file in your program:
+
+    #include "/Downloads/autocorrect-lib.v1.0/lib/autocorrect.h"
+
