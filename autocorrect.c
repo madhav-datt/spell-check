@@ -4,9 +4,11 @@
  * Implementation of autocorrect library functionalities
  * Based on a probabilistic model for word correction
  * 
- * hash - hash function djb2 by Dan Bernstein
- * hash_words - add words and frequencies to hash table
+ * check_word_frequency - returns frequency of word in data
+ * hash_words - add words and frequencies to trie
  * correct_word - give correct spelling of misspelled word
+ * size - give number of unique words in word frequency data
+ * unload_rec - recursively unloads trie from memory
  * unload_table - unload word hash table to free memory
  * 
  * Based on probability theory from http://norvig.com/spell-correct.html
@@ -34,15 +36,6 @@
 #define LENGTH_MAX 45
 #define WORD_DATA "word_data.txt"
 
-/**
- * Experimentally selected hash table size
- * Ensure no collisions for default dictionary/word data used
- */
-#define TABLE_SIZE 800011
-
-// Hash table for words from word data file
-int* words_hash_table = NULL;
-
 // Define each node of the trie with 27 children nodes
 typedef struct node
 {
@@ -52,6 +45,10 @@ typedef struct node
     // 0-25 for lowercase a-z, 26 for apostrophe (')
     struct node* next[27]; 
 } node;
+
+// For number of unique words stored in the word frequency data loaded
+// Gives size of word frequnecy data
+static int number_dict_words = 0;
 
 // Initialize trie to hold word data and frequencies in memory
 node* word_freq = NULL;
@@ -192,6 +189,9 @@ bool hash_words (void)
                     {
                         tmp -> is_word = true;
                         tmp -> frequency = 1;
+
+                        // Increment counter for unique word
+                        number_dict_words++;
                     }
                 }
                     
@@ -255,7 +255,7 @@ char* word_cor = NULL;
  * alteration (change one letter to another) or insertion (add a letter)
  *
  * Finds words with edit distance = 1
- * Returns word with highest probability value as per words_hash_table as suggested
+ * Returns word with highest probability value as per word frequency data trie as suggested
  * correction for misspelled word.
  * Returns NULL in case of error.
  *
@@ -400,6 +400,17 @@ bool unload_recr (node* dict_rem)
 
 /**
  *
+ * Gives size of word frequncy data
+ * Returns number of unique words in dictionary/word frequency data if loaded else 0 if not yet loaded.
+ *
+ */
+unsigned int size (void)
+{
+    return number_dict_words;
+}
+
+/**
+ *
  * Unloads word data from memory.  Returns true if successful else false.
  * Frees allocated memory blocks.
  *
@@ -409,5 +420,5 @@ bool unload_words (void)
     free (word_cor);
     word_cor = NULL;
 
-    return 1;//unload_recr (word_freq);
+    return unload_recr (word_freq);
 }
