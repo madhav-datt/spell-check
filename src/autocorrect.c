@@ -404,7 +404,7 @@ bool unload_recr (node* dict_rem)
  * Returns number of unique words in dictionary/word frequency data if loaded else 0 if not yet loaded.
  *
  */
-unsigned int size (void)
+unsigned int size_data (void)
 {
     return number_dict_words;
 }
