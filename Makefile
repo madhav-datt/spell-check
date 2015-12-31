@@ -19,22 +19,16 @@ CFLAGS  = -ggdb3 -O0 -std=c99 -Wall -Werror -g
 default: spellcheck
 
 # for executable file spellcheck 
-# object files are speller.o, dictionary.o, autocorrect.o:
+# object files are speller.o, autocorrect.o:
 #
-spellcheck:  speller.o dictionary.o autocorrect.o 
-	$(CC) $(CFLAGS) -o spellcheck speller.o dictionary.o autocorrect.o
+spellcheck:  speller.o autocorrect.o 
+	$(CC) $(CFLAGS) -o spellcheck speller.o autocorrect.o
 
 # for object file speller.o
-# source files speller.c, dictionary.h, autocorrect.h:
+# source files speller.c, autocorrect.h:
 #
-speller.o:  speller.c dictionary.h autocorrect.h 
+speller.o:  speller.c autocorrect.h 
 	$(CC) $(CFLAGS) -c speller.c
-
-# for object file dictionary.o
-# source files dictionary.c and dictionary.h:
-#
-dictionary.o:  dictionary.c dictionary.h 
-	$(CC) $(CFLAGS) -c dictionary.c
 
 # for object file autocorrect.o
 # source files autocorrect.c and autocorrect.h:
