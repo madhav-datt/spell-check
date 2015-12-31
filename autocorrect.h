@@ -59,7 +59,7 @@ char* correct_word (const char* word);
  * Returns number of unique words in dictionary/word frequency data if loaded else 0 if not yet loaded.
  *
  */
-unsigned int size (void);
+unsigned int size_data (void);
 
 /**
  *
