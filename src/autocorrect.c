@@ -112,7 +112,7 @@ int check_word_frequency (const char* word)
 bool hash_words (void)
 {
 	FILE* word_data_fp;
-	word_data_fp = fopen ("word_data.txt", "r");
+	word_data_fp = fopen ("Dictionary.txt", "r");
 
 	// File not opened
     if (word_data_fp == NULL)
