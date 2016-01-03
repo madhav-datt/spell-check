@@ -131,7 +131,7 @@ int main (int argc, char* argv[])
             time_check += calculate (&before, &after);
 
             // Print word if misspelled
-            if (!cor_spelled)
+            if (cor_spelled == 0)
             {
                 // Check word's correction
                 getrusage (RUSAGE_SELF, &before);
