@@ -3,9 +3,9 @@ Autocorrect Library - probabilistic model based word spelling corrections. C lan
 
 ## Library Contents and Functions
 
-* `bool hash_words (void)` - Loads word frequency data from file into hash table. Returns true if successful else false.
-* `char* correct_word (const char* word)` - Returns word with highest probability value as per words_hash_table as suggested correction for misspelled word.
-* `bool unload_words (void)` - Unloads word frequency data from memory.  Returns true if successful else false.
+* `bool hash_words (void)` - Loads word frequency data from file into hash table. Returns true if successful else false. To be called only once before any of the other functions can be used.
+* `char* correct_word (const char* word)` - Returns word with highest probability value as per words_hash_table as suggested correction for misspelled word. To be called for every misspelled word in file.
+* `bool unload_words (void)` - Unloads word frequency data from memory.  Returns true if successful else false. The above function can't be called once the file has been unloaded.
 
 ### Using Probability based correction
 
