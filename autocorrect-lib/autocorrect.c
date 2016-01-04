@@ -380,10 +380,21 @@ char* correct_word (const char* word)
 
 /**
  *
+ * Gives size of word frequncy data
+ * Returns number of unique words in dictionary/word frequency data if loaded else 0 if not yet loaded.
+ *
+ */
+unsigned int size_data (void)
+{
+    return number_dict_words;
+}
+
+/**
+ *
  * Recursive function to unload trie from memory.
  *
  */
-bool unload_recr (node* dict_rem)
+void unload_recr (node* dict_rem)
 {
     node* tmp = dict_rem;
 
@@ -394,19 +405,6 @@ bool unload_recr (node* dict_rem)
 
     free (tmp);
     tmp = NULL;
-    
-    return true;
-}
-
-/**
- *
- * Gives size of word frequncy data
- * Returns number of unique words in dictionary/word frequency data if loaded else 0 if not yet loaded.
- *
- */
-unsigned int size_data (void)
-{
-    return number_dict_words;
 }
 
 /**
@@ -420,5 +418,7 @@ bool unload_words (void)
     free (word_cor);
     word_cor = NULL;
 
-    return unload_recr (word_freq);
+    unload_recr (word_freq);
+
+    return true;
 }
