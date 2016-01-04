@@ -9,7 +9,9 @@ Autocorrect Library - probabilistic model based word spelling corrections. C lan
 
 ### Using Probability based correction
 
-`char* correct_word (const char* word)` finds words with edit distance = 1 and returns word with highest probability value as per words_hash_table as suggested correction for misspelled word. Edit distance between two words: number of edits to turn one into the other. Can be deletion (remove one letter), transposition (swap adjacent letters), alteration (change one letter to another) or insertion (add a letter).
+`char* correct_word (const char* word)` finds words with edit distance = 1 and returns word with highest probability value as per `words_hash_table` as suggested correction for misspelled word. 
+
+Edit distance between two words is defined as the number of edits to turn one into the other. Can be a deletion (remove one letter), a transposition (swap adjacent letters), an alteration (change one letter to another) or an insertion (add a letter).
 
 ## Using the library
 
