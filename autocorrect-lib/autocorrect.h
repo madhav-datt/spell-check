@@ -63,10 +63,10 @@ unsigned int size_data (void);
 
 /**
  *
- * Unloads word data from memory.  Returns true if successful else false.
+ * Unloads word data from memory. 
  * Frees allocated memory blocks.
  *
  */
-bool unload_words (void);
+void unload_words (void);
 
 #endif // AUTOCORRECT_H
