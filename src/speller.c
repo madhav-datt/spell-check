@@ -126,7 +126,7 @@ int main (int argc, char* argv[])
             getrusage (RUSAGE_SELF, &before);
             int cor_spelled = check_word_frequency (word);
             getrusage (RUSAGE_SELF, &after);
-
+            printf("%d ",cor_spelled);
             // Update benchmark
             time_check += calculate (&before, &after);
 
@@ -144,7 +144,7 @@ int main (int argc, char* argv[])
                 if (word_corrected == NULL)
                     printf ("%-45s No suggested correction\n", word);
                 else
-                    printf ("%-45s Suggested Correction: %s\n", word, word_corrected);
+                    printf ("%-45s Suggested Correction: \n", word);//, word_corrected);
 
                 misspellings++;
             }
@@ -176,15 +176,8 @@ int main (int argc, char* argv[])
 
     // Unload word data file
     getrusage (RUSAGE_SELF, &before);
-    bool unloaded_table = unload_words ();
+    unload_words ();
     getrusage (RUSAGE_SELF, &after);
-
-    // Abort if word data not unloaded
-    if (!unloaded_table)
-    {
-        printf ("Could not unload word data file.\n");
-        return 1;
-    }
 
     // Calculate time to unload word data
     time_unload = calculate(&before, &after);
