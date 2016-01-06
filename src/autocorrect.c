@@ -409,16 +409,14 @@ void unload_recr (node* dict_rem)
 
 /**
  *
- * Unloads word data from memory.  Returns true if successful else false.
+ * Unloads word data from memory.
  * Frees allocated memory blocks.
  *
  */
-bool unload_words (void)
+void unload_words (void)
 {
     free (word_cor);
     word_cor = NULL;
 
     unload_recr (word_freq);
-
-    return true;
 }
