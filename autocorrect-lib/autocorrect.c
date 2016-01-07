@@ -396,15 +396,17 @@ unsigned int size_data (void)
  */
 void unload_recr (node* dict_rem)
 {
-    node* tmp = dict_rem;
+
+    if (dict_rem == NULL)
+        return;
 
     // Recursively freeing allocated memory
     for (int i = 0; i < 27; i++)
-        if (tmp -> next[i] != NULL)
-            unload_recr (tmp -> next[i]);
+        if (dict_rem -> next[i] != NULL)
+            unload_recr (dict_rem -> next[i]);
 
-    free (tmp);
-    tmp = NULL;
+    free (dict_rem);
+    dict_rem = NULL;
 }
 
 /**
@@ -416,7 +418,6 @@ void unload_recr (node* dict_rem)
 void unload_words (void)
 {
     free (word_cor);
-    word_cor = NULL;
 
     unload_recr (word_freq);
 }
