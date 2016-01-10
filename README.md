@@ -34,5 +34,8 @@ Include the following header file in your program:
     * Take into account words with 2 corrections instead of 1.
     * Consider word hash values with frequency > 1 and Edit Distance = 2.
 
-* Optimize library for space. Currently, consumes a lot of memory.
+* ~~Optimize library for space. Currently, consumes a lot of memory.~~
 
+* Learning from user inputs
+    * Add text from files checked by user into word data.
+    * Process and update word frequency file.
