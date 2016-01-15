@@ -65,6 +65,10 @@ int AUTOCORR_check_word (const char* word)
 
     int word_len = strlen (word);
 
+    // Ignore terminal single quote characters from spellcheck
+    if (word[word_len - 1] == '\'')
+        word_len--;
+
     for (int i = 0; i < word_len; i++)
     {
         //printf ("%d", tmp -> frequency);
@@ -209,6 +213,8 @@ char* word_cor = NULL;
 char* AUTOCORR_correct_word (const char* word)
 {
     int word_len = strlen (word);
+
+    // Words with edit distance of 1 from misspelled word
     char word_edit_dist1 [AUTOCORR_LENGTH_MAX + 2];
     int word_edit_dist1_prob;
 
@@ -223,10 +229,12 @@ char* AUTOCORR_correct_word (const char* word)
         return NULL; 
     }
 
-    int word_cor_prob = 1;
+    int word_cor_prob = 0;
 
-    // Deletions (remove one letter)
-    // Length of word = word_len; Length of word_edit_dist1 = word_len - 1
+    /**
+     * Deletions (remove one letter)
+     * Length of word = word_len; Length of word_edit_dist1 = word_len - 1
+     */
     for (int i = 0; i < word_len; i++)
     {
         // Word with letter at i-th index removed
@@ -248,8 +256,10 @@ char* AUTOCORR_correct_word (const char* word)
         }
     }
 
-    // Transposition (swap adjacent letters)
-    // Length of word = word_len; Length of word_edit_dist1 = word_len
+    /**
+     * Transposition (swap adjacent letters)
+     * Length of word = word_len; Length of word_edit_dist1 = word_len
+     */
     for (int i = 0; i < word_len - 1; i++)
     {
         char tmp;
@@ -270,8 +280,10 @@ char* AUTOCORR_correct_word (const char* word)
         }
     }
 
-    // Alteration (change one letter to another)
-    // Length of word = word_len; Length of word_edit_dist1 = word_len
+    /**
+     * Alteration (change one letter to another)
+     * Length of word = word_len; Length of word_edit_dist1 = word_len
+     */
     for (int i = 0; i < word_len; i++)
     {
         for (char c = 'a'; c <= 'z'; c++)
@@ -299,8 +311,10 @@ char* AUTOCORR_correct_word (const char* word)
         } 
     }
 
-    // Insertion (add a letter)
-    // Length of word = word_len; Length of word_edit_dist1 = word_len + 1
+    /**
+     * Insertion (add a letter)
+     * Length of word = word_len; Length of word_edit_dist1 = word_len + 1
+     */
     for (int i = 0; i < word_len + 1; i++)
     {
         for (char c = 'a'; c <= 'z'; c++)
@@ -324,6 +338,7 @@ char* AUTOCORR_correct_word (const char* word)
             }
         }
     }
+
     return word_cor;
 }
 
