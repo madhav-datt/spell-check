@@ -135,16 +135,16 @@ int main (int argc, char* argv[])
             {
                 // Check word's correction
                 getrusage (RUSAGE_SELF, &before);
-                //char* word_corrected = AUTOCORR_correct_word (word);
+                char* word_corrected = AUTOCORR_correct_word (word);
                 getrusage (RUSAGE_SELF, &after);
 
                 // Update benchmark
                 time_correct += calculate (&before, &after);
 
-                //if (word_corrected == NULL)
+                if (word_corrected == NULL)
                     printf ("%-45s No suggested correction\n", word);
-               // else
-                  //  printf ("%-45s Suggested Correction: %s\n", word, word_corrected);
+                else
+                    printf ("%-45s Suggested Correction: %s\n", word, word_corrected);
 
                 misspellings++;
             }
