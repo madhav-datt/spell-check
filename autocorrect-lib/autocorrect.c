@@ -64,7 +64,7 @@ int AUTOCORR_check_word (const char* word)
 
     int word_len = strlen (word);
 
-    // Ignore terminal single quote characters from spellcheck
+    // Ignore terminal single quote character as part of word during spellcheck
     if (word[word_len - 1] == '\'')
         word_len--;
 
