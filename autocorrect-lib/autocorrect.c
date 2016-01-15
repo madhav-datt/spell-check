@@ -20,8 +20,7 @@
 
 /**
  * TODO:
- * 1. Consider word hash values with frequency > 1 and Edit Distance = 2.
- * 2. Optimize for space.
+ * 1. Consider words with frequency > 1 and Edit Distance = 2.
  *
  */
 
