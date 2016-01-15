@@ -1,13 +1,14 @@
 /**
  * autocorrect.h
  * 
- * Header file with the functionality of the autocorrect feature.
+ * Header file with the functionality of the autocorrect feature
  *
- * LENGTH_MAX - store maximum permitted word length
- * hash_words - add words and frequencies to trie
- * correct - give correct spelling of misspelled word
- * size - give number of unique words in word frequency data
- * unload_table - unload word hash table to free memory
+ * AUTOCORR_LENGTH_MAX - store maximum permitted word length
+ * AUTOCORR_check_word - check frequency of word in trie
+ * AUTOCORR_upload - add words and frequencies to trie
+ * AUTOCORR_correct_word - give correct spelling of misspelled word
+ * AUTOCORR_size_data - give number of unique words in word frequency data
+ * AUTOCORR_unload_words - unload word hash table to free memory
  *
  * Copyright (C)   2015    Madhav Datt
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -21,15 +22,15 @@
 
 // Assumed maximum word length in dictionary
 // (pneumonoultramicroscopicsilicovolcanoconiosis)
-#define LENGTH_MAX 45
+#define AUTOCORR_LENGTH_MAX 45
 
 /**
  *
  * Checks if word is present in word data trie.
- * Returns word frequency if word is in present in trie, else returns 0.
+ * Returns word frequency if word is in present in trie, else returns -1.
  *
  */
-int check_word_frequency (const char* word);
+int AUTOCORR_check_word (const char* word);
 
 /**
  *
@@ -37,7 +38,7 @@ int check_word_frequency (const char* word);
  * Returns true if successful else false.
  *
  */
-bool hash_words (void);
+bool AUTOCORR_upload (void);
 
 /**
  *
@@ -51,7 +52,7 @@ bool hash_words (void);
  * Returns NULL in case of error.
  *
  */
-char* correct_word (const char* word);
+char* AUTOCORR_correct_word (const char* word);
 
 /**
  *
@@ -59,7 +60,7 @@ char* correct_word (const char* word);
  * Returns number of unique words in dictionary/word frequency data if loaded else 0 if not yet loaded.
  *
  */
-unsigned int size_data (void);
+unsigned int AUTOCORR_size_data (void);
 
 /**
  *
@@ -67,6 +68,6 @@ unsigned int size_data (void);
  * Frees allocated memory blocks.
  *
  */
-void unload_words (void);
+void AUTOCORR_unload_words (void);
 
 #endif // AUTOCORRECT_H

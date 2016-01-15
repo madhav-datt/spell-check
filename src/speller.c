@@ -3,7 +3,7 @@
  *
  * Implements spell-checker.
  * Checks spelling of text document contents word-by-word.
- * Autocorrects incorrectly spelled words.
+ * Autocorrects incorrectly spelled words from text document.
  *
  * Copyright (C)   2015    Madhav Datt
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -54,7 +54,7 @@ int main (int argc, char* argv[])
 
     // Load word data
     getrusage (RUSAGE_SELF, &before);
-    bool loaded_table = hash_words ();
+    bool loaded_table = AUTOCORR_upload ();
     getrusage (RUSAGE_SELF, &after);
 
     // Calculate time to load word data
@@ -71,7 +71,7 @@ int main (int argc, char* argv[])
     if (text_file == NULL)
     {
         printf ("Could not open text file - %s.\n", text);
-        unload_words ();
+        AUTOCORR_unload_words ();
         return 1;
     }
 
@@ -80,7 +80,7 @@ int main (int argc, char* argv[])
 
     // Prepare to spell-check
     int index = 0, misspellings = 0, num_words = 0;
-    char word[LENGTH_MAX + 1];
+    char word[AUTOCORR_LENGTH_MAX + 1];
 
     // Spell-check each word in text
     for (int c = fgetc (text_file); c != EOF; c = fgetc (text_file))
@@ -93,7 +93,7 @@ int main (int argc, char* argv[])
             index++;
 
             // Ignore alphabetical strings too long to be words
-            if (index > LENGTH_MAX)
+            if (index > AUTOCORR_LENGTH_MAX)
             {
                 // Consume remainder of alphabetical string
                 while ((c = fgetc (text_file)) != EOF && isalpha (c));
@@ -124,27 +124,27 @@ int main (int argc, char* argv[])
 
             // Check word's spelling
             getrusage (RUSAGE_SELF, &before);
-            int cor_spelled = check_word_frequency (word);
+            int check = AUTOCORR_check_word (word);
             getrusage (RUSAGE_SELF, &after);
-            printf("%d ",cor_spelled);
+
             // Update benchmark
             time_check += calculate (&before, &after);
 
             // Print word if misspelled
-            if (cor_spelled == 0)
+            if (check == -1)
             {
                 // Check word's correction
                 getrusage (RUSAGE_SELF, &before);
-                char* word_corrected = correct_word (word);
+                //char* word_corrected = AUTOCORR_correct_word (word);
                 getrusage (RUSAGE_SELF, &after);
 
                 // Update benchmark
                 time_correct += calculate (&before, &after);
 
-                if (word_corrected == NULL)
+                //if (word_corrected == NULL)
                     printf ("%-45s No suggested correction\n", word);
-                else
-                    printf ("%-45s Suggested Correction: \n", word);//, word_corrected);
+               // else
+                  //  printf ("%-45s Suggested Correction: %s\n", word, word_corrected);
 
                 misspellings++;
             }
@@ -159,7 +159,7 @@ int main (int argc, char* argv[])
     {
         fclose (text_file);
         printf ("Error reading %s.\n", text);
-        unload_words ();
+        AUTOCORR_unload_words ();
         return 1;
     }
 
@@ -168,7 +168,7 @@ int main (int argc, char* argv[])
 
     // Determine dictionary's size
     getrusage (RUSAGE_SELF, &before);
-    unsigned int n = size_data ();
+    unsigned int n = AUTOCORR_size_data ();
     getrusage (RUSAGE_SELF, &after);
 
     // Calculate time to determine dictionary's size
@@ -176,7 +176,7 @@ int main (int argc, char* argv[])
 
     // Unload word data file
     getrusage (RUSAGE_SELF, &before);
-    unload_words ();
+    AUTOCORR_unload_words ();
     getrusage (RUSAGE_SELF, &after);
 
     // Calculate time to unload word data
