@@ -222,7 +222,7 @@ char* AUTOCORR_correct_word (const char* word)
         printf ("Out of memory. Autocorrect could not be run.\n");
         return NULL; 
     }
-    strcpy (word_cor, word_edit_dist1);
+
     int word_cor_prob = 1;
 
     // Deletions (remove one letter)
