@@ -186,11 +186,11 @@ int main (int argc, char* argv[])
     printf ("\nWORDS MISSPELLED:                        %d\n", misspellings);
     printf ("WORDS IN DICTIONARY:                     %d\n", n);
     printf ("WORDS IN TEXT:                           %d\n", num_words);
-    printf ("Time in loading dictionary file:         %.2f seconds\n", time_load);
+    printf ("Time in loading word data file:         %.2f seconds\n", time_load);
     printf ("Time in checking text:                   %.2f seconds\n", time_check);
     printf ("Time in correcting text:                 %.2f seconds\n", time_correct);
-    printf ("Time in finding size of dictionary:      %.2f seconds\n", time_size);
-    printf ("Time in unloading dictionary:            %.2f seconds\n", time_unload);
+    printf ("Time in finding size of word data:      %.2f seconds\n", time_size);
+    printf ("Time in unloading word data:            %.2f seconds\n", time_unload);
     printf ("TIME IN TOTAL:                           %.2f seconds\n\n", time_load + time_check + time_size + time_unload + time_correct);
 
     return 0;
