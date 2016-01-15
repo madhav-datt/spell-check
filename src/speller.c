@@ -3,7 +3,7 @@
  *
  * Implements spell-checker.
  * Checks spelling of text document contents word-by-word.
- * Autocorrects incorrectly spelled words from text document.
+ * Autocorrect suggestions for incorrectly spelled words from text files.
  *
  * Copyright (C)   2015    Madhav Datt
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -13,6 +13,7 @@
 /**
  * TODO:
  * 1. Implement automatic replacement of misspelled words with corrected spellings in text file. 
+ * 2. Add text from files checked by user into word data. Process and update word frequency file.
  *
  */
 
@@ -27,6 +28,7 @@
 #undef calculate
 #undef getrusage
 
+// Microseconds to a second
 #define MICRO_TO_S 1000000.0
 
 // Returns number of seconds between b and a
@@ -186,11 +188,11 @@ int main (int argc, char* argv[])
     printf ("\nWORDS MISSPELLED:                        %d\n", misspellings);
     printf ("WORDS IN DICTIONARY:                     %d\n", n);
     printf ("WORDS IN TEXT:                           %d\n", num_words);
-    printf ("Time in loading word data file:         %.2f seconds\n", time_load);
+    printf ("Time in loading word data file:          %.2f seconds\n", time_load);
     printf ("Time in checking text:                   %.2f seconds\n", time_check);
     printf ("Time in correcting text:                 %.2f seconds\n", time_correct);
-    printf ("Time in finding size of word data:      %.2f seconds\n", time_size);
-    printf ("Time in unloading word data:            %.2f seconds\n", time_unload);
+    printf ("Time in finding size of word data:       %.2f seconds\n", time_size);
+    printf ("Time in unloading word data:             %.2f seconds\n", time_unload);
     printf ("TIME IN TOTAL:                           %.2f seconds\n\n", time_load + time_check + time_size + time_unload + time_correct);
 
     return 0;
@@ -199,6 +201,7 @@ int main (int argc, char* argv[])
 /**
  *
  * Returns number of seconds between b and a.
+ * Uses resource usage structures.
  *
  */
 double calculate (const struct rusage* b, const struct rusage* a)
