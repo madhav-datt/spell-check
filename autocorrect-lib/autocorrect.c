@@ -21,6 +21,7 @@
 /**
  * TODO:
  * 1. Consider words with frequency > 1 and Edit Distance = 2.
+ * 2. Add text from files checked by user into word data. Process and update word frequency file.
  *
  */
 
@@ -337,6 +338,10 @@ char* AUTOCORR_correct_word (const char* word)
             }
         }
     }
+
+    // Handle empty strings - no replacement word found
+    if (word_cor[0] == '\0')
+        return NULL;
 
     return word_cor;
 }
