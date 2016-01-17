@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#
+# Script to convert raw English language data to "frequency word" format.
+# Takes file "big.txt" as input raw data and generates "word_data.txt".
+# Generated file has words in the format "frequency word\n"
+#
+# Copyright (C)   2016    Madhav Datt
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
+
+# Convert all uppercase letters in file to lowercase
+tr '[:upper:]' '[:lower:]' < big.txt > big1.txt
+
+# Remove all punctuations except (') apostrophes
+gcc fix.c -o fix
+./fix
+
+# Group identical words & sort by frequency
+tr -c '[:alpha:][:punct:]' '[\n*]' < words.txt | sort | uniq -c | sort -nr > word_data.txt
+
+# Remove leading whitespaces
+sed "s/^[ \t]*//" -i word_data.txt
+
+# Remove first line from generated file (garbage value)
+sed -i '1d' word_data.txt
+
+# Clean files created during process
+rm big1.txt fix words.txt
+
