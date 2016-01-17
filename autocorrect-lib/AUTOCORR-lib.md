@@ -3,7 +3,7 @@ Autocorrect Library - probabilistic model based word spelling corrections. C lan
 
 ## Library Contents and Functions
 
-* `AUTOCORR_LENGTH_MAX` - Stores maximum permitted word length that can be checked and corrected using the library.
+* `int AUTOCORR_LENGTH_MAX` - Stores maximum permitted word length that can be checked and corrected using the library.
 * `int AUTOCORR_check_word (const char* word)` - Checks if word is present in word data trie. Returns `word_frequency` if word is in present in trie, else returns `-1`.
 * `bool AUTOCORR_upload (void)` - Loads word frequency data from file into a Trie data structure. Returns true if successful else false. To be called only once before any other functions from the library can be used.
 * `char* AUTOCORR_correct_word (const char* word)` - Returns word with highest probability value as per words_hash_table as suggested correction for misspelled word. To be called for every misspelled word in file.
