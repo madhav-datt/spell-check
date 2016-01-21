@@ -27,14 +27,14 @@ spellcheck:  speller.o autocorrect.o
 # for object file speller.o
 # source files speller.c, autocorrect.h:
 #
-speller.o:  speller.c autocorrect.h 
+speller.o:  speller.c ../autocorrect-lib/autocorrect.h 
 	$(CC) $(CFLAGS) -c speller.c
 
 # for object file autocorrect.o
 # source files autocorrect.c and autocorrect.h:
 #
-autocorrect.o:  autocorrect.c autocorrect.h 
-	$(CC) $(CFLAGS) -c autocorrect.c
+autocorrect.o:  ../autocorrect-lib/autocorrect.c ../autocorrect-lib/autocorrect.h 
+	$(CC) $(CFLAGS) -c ../autocorrect-lib/autocorrect.c
 
 # remove old *.o object files and *~ backup files:
 #

@@ -23,7 +23,7 @@
 #include <sys/time.h>
 #include <stdlib.h>
 
-#include "autocorrect.h"
+#include "../autocorrect-lib/autocorrect.h"
 
 #undef calculate
 #undef getrusage
