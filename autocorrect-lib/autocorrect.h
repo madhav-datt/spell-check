@@ -10,7 +10,7 @@
  * AUTOCORR_size_data - give number of unique words in word frequency data
  * AUTOCORR_unload_words - unload word hash table to free memory
  *
- * Copyright (C)   2015    Madhav Datt
+ * Copyright (C)   2016    Madhav Datt
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  */
