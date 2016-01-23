@@ -2,7 +2,7 @@
 # Makefile for spellcheck program
 # Typing 'make' or 'make spellcheck' will create the executable file.
 #
-# Copyright (C)   2015    Madhav Datt
+# Copyright (C)   2016    Madhav Datt
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 
