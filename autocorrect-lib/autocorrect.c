@@ -34,7 +34,7 @@
 #include "autocorrect.h"
 
 // Word frequnecy data file
-#define WORD_DATA "data-files/word_data.txt"
+#define WORD_DATA "../autocorrect-lib/data-files/word_data.txt"
 
 // Define each node of the trie with 27 children nodes
 typedef struct node
