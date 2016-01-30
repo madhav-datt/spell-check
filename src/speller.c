@@ -5,7 +5,7 @@
  * Checks spelling of text document contents word-by-word.
  * Autocorrect suggestions for incorrectly spelled words from text files.
  *
- * Copyright (C)   2015    Madhav Datt
+ * Copyright (C)   2016    Madhav Datt
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  */

@@ -13,7 +13,7 @@
  * 
  * Based on probability theory from http://norvig.com/spell-correct.html
  *
- * Copyright (C)   2015    Madhav Datt
+ * Copyright (C)   2016    Madhav Datt
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  */
