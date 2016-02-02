@@ -7,6 +7,6 @@ C program to spell-check and auto-correct documents (text files).
 ### Usage
 
 ## Benchmarks
-### Speed
+### Spellcheck Speed
 
 ### Autocorrect Accuracy
