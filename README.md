@@ -4,15 +4,18 @@
 ## Checking Documents
 ### Downloading spell-check
 
-
-
     $ wget https://github.com/madhav-datt/spell-check/archive/spell-check-v2.0.zip
     $ unzip spell-check-v2.0.zip
     $ rm -f spell-check-v2.0.zip
 
 ### Installing spell-check
 
+    $ cd spell-check-v2.0.zip
+    $ make
+
 ### Using spell-check
+
+  
 
 ## Benchmarks
 ### Spellcheck Speed
