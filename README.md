@@ -19,7 +19,9 @@
     
 The program will output a list of all the misspelled words along with suggested corrections, and file checking benchmarks.
 
-![Sample spell-check output]()
+![Sample spell-check output](https://github.com/madhav-datt/spell-check/blob/master/resources/output.png)
+
+_oficiel_, which was intended to be _official_ has no suggested correction because it has an edit distance of more than 1 from a correctly spelled word. Read more about this [here](https://github.com/madhav-datt/spell-check/blob/master/autocorrect-lib/AUTOCORR-lib.md).
 
 ## Benchmarks
 ### Spellcheck Speed
@@ -40,4 +42,5 @@ Read about the data, sources, processing raw word data, word frequency, probabil
 
     > "**There** is nothing to be done here."
 
+* Words with edit distances greater than 1 cannot be corrected.
 * Please report bugs and issues [here](https://github.com/madhav-datt/spell-check/issues).
