@@ -28,7 +28,7 @@ _oficiel_, which was intended to be _official_ has no suggested correction becau
 
 ### Autocorrect Accuracy
 
-## Data Frequency Details
+## Word Frequency Data Details
 
 Read about the data, sources, processing raw word data, word frequency, probabilistic word correction etc. [here](https://github.com/madhav-datt/spell-check/blob/master/autocorrect-lib/AUTOCORR-lib.md).
 
