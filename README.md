@@ -24,6 +24,9 @@ The program will output a list of all the misspelled words along with suggested 
 _oficiel_, which was intended to be _official_ has no suggested correction because it has an edit distance of more than 1 from a correctly spelled word. Read more about this [here](https://github.com/madhav-datt/spell-check/blob/master/autocorrect-lib/AUTOCORR-lib.md).
 
 ## Benchmarks
+
+Both speed and accuracy benchmarks have been averaged over multiple input text files and documents.
+
 ### Spellcheck Speed
 
 ### Autocorrect Accuracy
