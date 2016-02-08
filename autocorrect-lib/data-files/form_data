@@ -3,7 +3,7 @@
 #
 # Script to convert raw English language data to "frequency word" format.
 # Takes file "big.txt" as input raw data and generates "word_data.txt".
-# Generated file has words in the format "frequency word\n"
+# Generated file has words in the format "frequency word\n" for processing by autocorrect-lib
 #
 # Copyright (C)   2016    Madhav Datt
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
