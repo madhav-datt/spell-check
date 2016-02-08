@@ -40,6 +40,8 @@ Optimized for speed - can spellcheck over *1 Million words in less than 1 second
 |:-------------------------:|:---------------------------:|:------------------------:|:----------------------:|
 |      0.56 seconds         |          0.01 seconds       |    0.15 seconds            |    0.98 seconds     |
 
+![Sample speed benchmark](https://github.com/madhav-datt/spell-check/blob/master/resources/speed_benchmark.png)
+
 ### Autocorrect Accuracy
 
 ## Word Frequency Data Details
