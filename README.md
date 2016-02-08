@@ -25,9 +25,20 @@ _oficiel_, which was intended to be _official_ has no suggested correction becau
 
 ## Benchmarks
 
-Both speed and accuracy benchmarks have been averaged over multiple input text files and documents.
+Both speed and accuracy benchmarks give an approximate value that has been averaged over multiple input text files and documents.
 
 ### Spellcheck Speed
+
+Optimized for speed - can spellcheck over *1 Million words in less than 1 second*.
+
+| **Misspelled Words** | **Words in Dictionary** | **Words in Text Document** | **Time in Loading Data** |
+|:--------------------:|:-----------------------:|:--------------------------:|:------------------------:|
+| 122.5                |  368895                 |  10237257.5                |      0.34 seconds        |
+
+
+| **Time in Checking Text** | **Time in Correcting Text** | **Time in Unloading Data** | **Total Time** |
+|:-------------------------:|:---------------------------:|:------------------------:|:----------------------:|
+|      0.56 seconds         |          0.01 seconds       |    0.15 seconds            |    0.98 seconds     |
 
 ### Autocorrect Accuracy
 
