@@ -44,6 +44,8 @@ Optimized for speed - can spellcheck over *1 Million words in less than 1 second
 
 ### Autocorrect Accuracy
 
+Calculated on inputs from Roger Mitton's Birkbeck spelling error corpus from the Oxford Text Archive.
+
 ## Word Frequency Data Details
 
 Read about the data, sources, processing raw word data, word frequency, probabilistic word correction etc. [here](https://github.com/madhav-datt/spell-check/blob/master/autocorrect-lib/AUTOCORR-lib.md).
