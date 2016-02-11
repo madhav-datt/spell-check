@@ -44,7 +44,7 @@ Optimized for speed - can spellcheck over *1 Million words in less than 1 second
 
 ### Autocorrect Accuracy
 
-Calculated on inputs from Roger Mitton's Birkbeck spelling error corpus from the Oxford Text Archive.
+Calculated on inputs from Roger Mitton's Birkbeck spelling error corpus from the Oxford Text Archive. On a development set of 250 test cases (including context based mistakes for correctly spelled words) the spell-check program has an **accuracy of around 66 %** and close to **80 % for misspelled words with an edit distance equal to one.**
 
 ## Word Frequency Data Details
 
