@@ -54,11 +54,19 @@ Read about the data, sources, processing raw word data, word frequency, probabil
 
 * No context based/grammar checking - 
 
-    > "**Their** is nothing to be done here."
+    > **Their** is nothing to be done here.
 
     will be treated as a correct sentence and not be changed to
 
-    > "**There** is nothing to be done here."
+    > **There** is nothing to be done here.
 
-* Words with edit distances greater than 1 cannot be corrected.
+* Words with edit distances greater than 1 cannot be corrected - _`oficiel`_, won't be corrected to _`official`_.
+* Doesn't fix spelling errors due to missing spaces.
+
+    > historicaldata
+
+    will be found as misspelled, but won't be corrected to
+
+    > historical data
+
 * Please report bugs and issues [here](https://github.com/madhav-datt/spell-check/issues).
