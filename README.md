@@ -7,12 +7,12 @@
     $ wget https://github.com/madhav-datt/spell-check/archive/spell-check-v2.0.zip
     $ unzip spell-check-v2.0.zip
     $ rm -f spell-check-v2.0.zip
-    $ cd spell-check-v2.0.zip/src
+    $ cd spell-check-v2.0/src
     $ make
 
 ### Running spellchecker
 
-    $ cd spell-check-v2.0.zip/src
+    $ cd spell-check-v2.0/src
     $ ./spellchecker /path/to/file/file_to_be_checked.txt
     
 ### Output
