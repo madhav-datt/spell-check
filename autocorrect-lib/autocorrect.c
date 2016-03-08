@@ -346,6 +346,16 @@ char* AUTOCORR_correct_word (const char* word)
      */
     if (word_cor[0] == '\0')
     {
+        // Prepare to check, segment word
+        free (word_cor);
+        word_cor = NULL;
+
+        // Intialize correct word string
+        // Add log (AUTOCORR_LENGTH_MAX) / log (2) space to word_cor for possible segmentation spaces
+        // Add space for segment correction
+        if ((word_cor = calloc (2 * AUTOCORR_LENGTH_MAX, sizeof (char))) == NULL)
+            printf ("Out of memory. Autocorrect could not be run.\n");
+
         segment_word (word);
 
         // Handle empty strings - no replacement word found
@@ -373,39 +383,50 @@ char* AUTOCORR_correct_word (const char* word)
 void segment_word (char* word)
 {
     int word_len = strlen (word);
-
-    // Prepare to check, segment word
-    free (word_cor);
-    word_cor = NULL;
-
+    
     char* word_seg_cor = NULL;
     char* word_seg_rem = NULL;
-
-    // Intialize correct word string
-    // Add log (AUTOCORR_LENGTH_MAX) / log (2) space to word_cor for possible segmentation spaces
-    // Add space for segment correction
-    if ((word_cor = calloc (2 * AUTOCORR_LENGTH_MAX, sizeof (char))) == NULL)
-        printf ("Out of memory. Autocorrect could not be run.\n");
 
     // Check for largest prefix of the incorrect word string
     // Only consider prefixes longer than/equal to length 2
     for (int i = word_len - 1; i >= 2; i--)
     {
+        bool prefix_match = false;
+
         // Initialize word_seg_cor string
         if ((word_seg_cor = calloc (i + 2, sizeof (char))) == NULL)
             printf ("Out of memory. Autocorrect could not be run.\n");
 
         // Initialize word_seg_rem string
-        if ((word_seg_rem = calloc (word_len - i - 1, sizeof (char))) == NULL)
+        if ((word_seg_rem = calloc (word_len - i, sizeof (char))) == NULL)
             printf ("Out of memory. Autocorrect could not be run.\n");
 
         // Create specified prefix of word to segment
         for (int j = 0; j <= i; j++)
             word_seg_cor[j] = word[j];
+        word_seg_cor[i + 1] = '\0';
 
         // Keep remaining suffix string word_seg_rem
         for (int j = i + 1; j < word_len; j++)
             word_seg_rem[j - i - 1] = word[j];
+        word_seg_rem[word_len - i - 1] = '\0';
+
+        // Selected prefix is a correct word
+        if (AUTOCORR_check_word (word_seg_cor) > 0)
+        {
+            // Set end of loop flag
+            prefix_match = true;
+
+            strcat (word_cor, " ");
+            strcat (word_cor, word_seg_cor);
+        }
+
+        // Free memory
+        free (word_seg_rem);
+        free (word_seg_cor);
+
+        if (prefix_match == true)
+            break;
     }
 }
 
