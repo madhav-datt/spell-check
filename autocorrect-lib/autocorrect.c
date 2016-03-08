@@ -344,8 +344,6 @@ char* AUTOCORR_correct_word (const char* word)
      * Inserts spaces into incorrect word using greedy maximum prefix algorithm
      * To be tried only if no other alternate replacements found
      */
-
-    // Check for empty string for Segmentation
     if (word_cor[0] == '\0')
         segment_word (word);
 
@@ -366,28 +364,29 @@ char* AUTOCORR_correct_word (const char* word)
  */
 void segment_word (char* word)
 {
+    int word_len = strlen (word);
+
     // Prepare to check, segment word
     free (word_cor);
     word_cor = NULL;
 
     // Intialize correct word string
-    if ((word_cor = calloc (AUTOCORR_LENGTH_MAX + 2, sizeof (char))) == NULL)
+    // Add log (AUTOCORR_LENGTH_MAX) / log (2) space to word_cor for possible segmentation spaces
+    // Add space for segment correction
+    if ((word_cor = calloc (2 * AUTOCORR_LENGTH_MAX, sizeof (char))) == NULL)
         printf ("Out of memory. Autocorrect could not be run.\n");
 
     // Check for largest prefix of the incorrect word string
-    // Only consider prefixes longer than length 2
+    // Only consider prefixes longer than/equal to length 2
     for (int i = word_len - 1; i >= 2; i--)
     {
         // Create specified prefix of word to segment
-        for (int j = 0; j < i; j++)
-        {
+        for (int j = 0; j <= i; j++)
+            word_seg_corr[j] = word[j];
 
-        }
+        // Keep remaining suffix string
+        for (int j = i + 1; j < word_len; j++)
 
-        // Check if word from index 0 to i forms a word
-        if (AUTOCORR_check_word () != -1)
-           strcpy (word_seg, );
-           strcat (word_seg, " ");
     }
 }
 
