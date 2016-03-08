@@ -345,35 +345,30 @@ char* AUTOCORR_correct_word (const char* word)
      * To be tried only if no other alternate replacements found
      */
 
-     // Check for empty string for Segmentation
-     if (word_cor[0] == '\0')
-     {
-         // Intialize correct word string
-         if ((word_seg = calloc (AUTOCORR_LENGTH_MAX + 2, sizeof (char))) == NULL)
-         {
-             printf ("Out of memory. Autocorrect could not be run.\n");
-             return NULL;
-         }
-
-         // Check for largest prefix of the incorrect word string
-         for (int i = word_len - 1; i >= 0; i--)
-         {
-             // Check if word from index 0 to i forms a word
-             if (AUTOCORR_check_word () != -1)
-                strcpy (word_seg, );
-                strcat (word_seg, " ");
-         }
-
-         // if found, return segmented word with spaces
-         return word_seg;
-     }
-
+    // Check for empty string for Segmentation
+    if (word_cor[0] == '\0')
+        segment_word (word);
+    
     // Handle empty strings - no replacement word found
     if (word_cor[0] == '\0')
         return NULL;
 
     return word_cor;
 }
+
+
+/**
+ *
+ * Segmentation into multiple words ("maximumtime" to "maximum time")
+ * Inserts spaces into incorrect word using greedy maximum prefix algorithm
+ * To be tried only if no other alternate replacements found
+ *
+ */
+void segment_word (char* word)
+{
+
+}
+
 
 /**
  *
