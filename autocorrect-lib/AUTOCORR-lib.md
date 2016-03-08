@@ -12,9 +12,17 @@ Autocorrect Library - probabilistic model based word spelling corrections. C lan
 
 ### Probability based Correction
 
-`char* AUTOCORR_correct_word (const char* word)` finds words with edit distance = 1 and returns word with highest probability value as per `word_data.txt` as suggested correction for the misspelled word. 
+`char* AUTOCORR_correct_word (const char* word)` finds words with edit distance = 1 and returns word with highest probability value as per `word_data.txt` as suggested correction for the misspelled word.
 
 Edit distance between two words is defined as the number of edits to turn one into the other. Can be a deletion (remove one letter), a transposition (swap adjacent letters), an alteration (change one letter to another) or an insertion (add a letter).
+
+### Word Segmentation based Correction
+
+If finding correct words within the acceptable edit distance value fails, `char* AUTOCORR_correct_word (const char* word)` tries to break the down by inserting spaces.
+
+A greedy algorithm is used to select the longest correct word prefix of the the word being corrected. The algorithm is recursively run on the suffix till all the missing spaces have been added.
+
+The last of the misspelled portion (no more spaces can be added to obtain correctly spelled words) is discarded.
 
 ## Using the library
 
@@ -29,15 +37,16 @@ Edit distance between two words is defined as the number of edits to turn one in
 Include the following header file in your program:
 
     #include "/Downloads/autocorrect-lib.v1.0/lib/autocorrect.h"
-    
+
 ## TODOs
 
 * Autocorrect error correction probability improvement.
     * Take into account words with 2 corrections instead of 1.
     * Consider word hash values with frequency > 1 and Edit Distance = 2.
 
-* ~~Optimize library for space. Currently, consumes a lot of memory.~~
-
 * Learning from user inputs
     * Add text from files checked by user into word data.
     * Process and update word frequency file.
+
+* ~~Optimize library for space. Currently, consumes a lot of memory.~~
+* ~~Correct words with missing spaces.~~

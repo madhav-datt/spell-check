@@ -25,7 +25,7 @@ _`oficiel`_, which was intended to be _`official`_ has no suggested correction b
 
 `spell-check` will fix spelling errors due to missing spaces using a segmentation algorithm. Read more [here](https://github.com/madhav-datt/spell-check/blob/master/autocorrect-lib/AUTOCORR-lib.md).
 
-
+![Sample spell-check segmentation output](https://github.com/madhav-datt/spell-check/blob/master/resources/seg_output.png)
 
 ## Benchmarks
 
