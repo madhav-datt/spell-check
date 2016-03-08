@@ -345,11 +345,18 @@ char* AUTOCORR_correct_word (const char* word)
      * To be tried only if no other alternate replacements found
      */
     if (word_cor[0] == '\0')
+    {
         segment_word (word);
 
-    // Handle empty strings - no replacement word found
-    if (word_cor[0] == '\0')
-        return NULL;
+        // Handle empty strings - no replacement word found
+        if (word_cor[0] == '\0')
+            return NULL;
+
+        // Remove leading space from segmented word
+        else
+            for (int j = 0; word_cor[j] != '\0'; j++)
+                word_cor[j] = word_cor[j + 1];
+    }
 
     return word_cor;
 }
@@ -360,6 +367,7 @@ char* AUTOCORR_correct_word (const char* word)
  * Segmentation into multiple words ("maximumtime" to "maximum time")
  * Inserts spaces into incorrect word using greedy maximum prefix algorithm
  * To be tried only if no other alternate replacements found
+ * Adds one leading whitespace to segmented word
  *
  */
 void segment_word (char* word)
@@ -369,6 +377,9 @@ void segment_word (char* word)
     // Prepare to check, segment word
     free (word_cor);
     word_cor = NULL;
+
+    char* word_seg_cor = NULL;
+    char* word_seg_rem = NULL;
 
     // Intialize correct word string
     // Add log (AUTOCORR_LENGTH_MAX) / log (2) space to word_cor for possible segmentation spaces
@@ -380,13 +391,21 @@ void segment_word (char* word)
     // Only consider prefixes longer than/equal to length 2
     for (int i = word_len - 1; i >= 2; i--)
     {
+        // Initialize word_seg_cor string
+        if ((word_seg_cor = calloc (i + 2, sizeof (char))) == NULL)
+            printf ("Out of memory. Autocorrect could not be run.\n");
+
+        // Initialize word_seg_rem string
+        if ((word_seg_rem = calloc (word_len - i - 1, sizeof (char))) == NULL)
+            printf ("Out of memory. Autocorrect could not be run.\n");
+
         // Create specified prefix of word to segment
         for (int j = 0; j <= i; j++)
-            word_seg_corr[j] = word[j];
+            word_seg_cor[j] = word[j];
 
-        // Keep remaining suffix string
+        // Keep remaining suffix string word_seg_rem
         for (int j = i + 1; j < word_len; j++)
-
+            word_seg_rem[j - i - 1] = word[j];
     }
 }
 
