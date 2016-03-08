@@ -28,5 +28,8 @@
 *.x86_64
 *.hex
 
+# Spellcheck Program Executable
+spellcheck
+
 # Debug files
 *.dSYM/
