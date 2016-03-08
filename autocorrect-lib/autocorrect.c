@@ -52,6 +52,11 @@ static int number_dict_words = 0;
 // Initialize trie to hold word data and frequencies in memory
 node* word_freq = NULL;
 
+
+// Forward declaration of segmentation function
+// Segmentation into multiple words ("maximumtime" to "maximum time")
+void segment_word (const char* word);
+
 /**
  *
  * Checks if word is present in word data trie.
@@ -380,7 +385,7 @@ char* AUTOCORR_correct_word (const char* word)
  * Adds one leading whitespace to segmented word
  *
  */
-void segment_word (char* word)
+void segment_word (const char* word)
 {
     int word_len = strlen (word);
 
@@ -419,7 +424,7 @@ void segment_word (char* word)
 
             strcat (word_cor, " ");
             strcat (word_cor, word_seg_cor);
-            segement_word (word_seg_rem);
+            segment_word (word_seg_rem);
         }
 
         // Free memory

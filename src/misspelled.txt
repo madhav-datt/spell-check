@@ -2838,10 +2838,10 @@ answers to those letters come, so we may put our little problem
 upon the shelf for the interim."
 
 I had had so many reasons to believe in my friend's subtle powers
-of reasoning and extraordinary energy in action that I felt that
+of reasoning and extraordinaryenergy in action that I felt that
 he must have some solid grounds for the assured and easy
 demeanour with which he treated the singular mystery which he had
-been called upon to fathom. Once only had I known him to fail, in
+beencalledupon to fathom. Once only had I known him to fail, in
 the case of the King of Bohemia and of the Irene Adler
 photograph; but when I looked back to the weird business of the
 Sign of Four, and the extraordinary circumstances connected with
@@ -2854,12 +2854,12 @@ find that he held in his hands all the clues which would lead up
 to the identity of the disappearing bridegroom of Miss Mary
 Sutherland.
 
-A professional case of great gravity was engaging my own
+A professionalcase of great gravity was engaging my own
 attention at the time, and the whole of next day I was busy at
 the bedside of the sufferer. It was not until close upon six
 o'clock that I found myself free and was able to spring into a
 hansom and drive to Baker Street, half afraid that I might be too
-late to assist at the dénouement of the little mystery. I found
+late to assist at the denouement of the little mystery. I found
 Sherlock Holmes alone, however, half asleep, with his long, thin
 form curled up in the recesses of his armchair. A formidable
 array of bottles and test-tubes, with the pungent cleanly smell
@@ -12161,7 +12161,7 @@ the nursery.
 "Two days later this same performance was gone through under
 exactly similar circumstances. Again I changed my dress, again I
 sat in the window, and again I laughed very heartily at the funny
-stories of which my employer had an immense répertoire, and which
+stories of which my employer had an immense repertoire, and which
 he told inimitably. Then he handed me a yellow-backed novel, and
 moving my chair a little sideways, that my own shadow might not
 fall upon the page, he begged me to read aloud to him. I read for
@@ -12690,7 +12690,7 @@ Walsall, where I believe that she has met with considerable success.
 
 
 
-End of the Project Gutenberg EBook of The Adventures of Sherlock Holmes, by 
+End of the Project Gutenberg EBook of The Adventures of Sherlock Holmes, by
 Arthur Conan Doyle
 
 *** END OF THIS PROJECT GUTENBERG EBOOK THE ADVENTURES OF SHERLOCK HOLMES ***
