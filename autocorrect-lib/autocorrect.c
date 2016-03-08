@@ -348,7 +348,7 @@ char* AUTOCORR_correct_word (const char* word)
     // Check for empty string for Segmentation
     if (word_cor[0] == '\0')
         segment_word (word);
-    
+
     // Handle empty strings - no replacement word found
     if (word_cor[0] == '\0')
         return NULL;
@@ -366,9 +366,30 @@ char* AUTOCORR_correct_word (const char* word)
  */
 void segment_word (char* word)
 {
+    // Prepare to check, segment word
+    free (word_cor);
+    word_cor = NULL;
 
+    // Intialize correct word string
+    if ((word_cor = calloc (AUTOCORR_LENGTH_MAX + 2, sizeof (char))) == NULL)
+        printf ("Out of memory. Autocorrect could not be run.\n");
+
+    // Check for largest prefix of the incorrect word string
+    // Only consider prefixes longer than length 2
+    for (int i = word_len - 1; i >= 2; i--)
+    {
+        // Create specified prefix of word to segment
+        for (int j = 0; j < i; j++)
+        {
+
+        }
+
+        // Check if word from index 0 to i forms a word
+        if (AUTOCORR_check_word () != -1)
+           strcpy (word_seg, );
+           strcat (word_seg, " ");
+    }
 }
-
 
 /**
  *
