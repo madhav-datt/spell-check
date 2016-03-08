@@ -383,7 +383,7 @@ char* AUTOCORR_correct_word (const char* word)
 void segment_word (char* word)
 {
     int word_len = strlen (word);
-    
+
     char* word_seg_cor = NULL;
     char* word_seg_rem = NULL;
 
@@ -419,6 +419,7 @@ void segment_word (char* word)
 
             strcat (word_cor, " ");
             strcat (word_cor, word_seg_cor);
+            segement_word (word_seg_rem);
         }
 
         // Free memory
