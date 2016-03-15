@@ -52,7 +52,7 @@ Calculated on inputs from Roger Mitton's Birkbeck spelling error corpus from the
 
 ## Word Frequency Data Details
 
-Read about the data, sources, processing raw word data, word frequency, probabilistic word correction etc. [here](https://github.com/madhav-datt/spell-check/blob/master/autocorrect-lib/AUTOCORR-lib.md).
+Read about the data, sources, processing raw word data, word frequency, probabilistic model for word correction etc. [here](https://github.com/madhav-datt/spell-check/blob/master/autocorrect-lib/AUTOCORR-lib.md).
 
 ## Known Issues
 
