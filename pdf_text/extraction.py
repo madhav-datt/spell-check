@@ -25,6 +25,7 @@ def convert_single_file(directory, file):
     Extract text from passed PDF file to text file in the same directory
     :param directory: Path to directory containing PDFs to be converted. Only absolute paths/hard links only
     :param file: Path to PDF file to be converted. Only absolute paths/hard links only
+    :return: txt_file_path Path to converted text file
     """
 
     # Create name for file as "pdf_name.txt"
@@ -91,6 +92,11 @@ if __name__ == '__main__':
     # List of files to be spellchecked and autocorrected
     files_list = []
 
+    print("spellcheck Copyright (C) 2016 by Madhav Datt")
+    print("Website: https://github.com/madhav-datt/spell-check")
+    print("See the GNU General Public Licence for license details.")
+    print("\n")
+
     # Batch processing mode - spellcheck multiple files together
     # Directory path is passed as parameter
     if isdir(file_path):
@@ -110,11 +116,18 @@ if __name__ == '__main__':
         elif file_extension == ".txt":
             files_list = [file_path]
         else:
+            print("File type not supported. Run spellcheck --help for usage instructions")
             sys.exit()
 
-    chdir("src/")
-    system("make")
+    # Unrecognized/unsupported argument passed
+    else:
+        print("Usage: spellcheck /path/to/file_name.txt")
+        print("Usage: spellcheck /path/to/file_name.pdf")
+        print("Usage: spellcheck /path/to/directory_name")
+
+    chdir("../src/")
     for file in files_list:
         cmd_autocorrect = "./spellcheck {check_file}".format(check_file=file)
-        print(file)
+        print("File: ", file)
         system(cmd_autocorrect)
+        print("")
