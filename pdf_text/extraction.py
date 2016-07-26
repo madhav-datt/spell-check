@@ -1,7 +1,8 @@
 #
 # Text extraction and pre-processing from PDFs
-# Contains methods to extract from PDFs, tokenize and POS tag sentences
+# Contains methods to extract text from PDFs into txt files
 # Uses multi-threading for performance purposes
+# Makes calls to C program for each text file to be spellchecked and autocorrected
 #
 # Copyright (C)   2016    Madhav Datt
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -11,7 +12,7 @@ import re
 import sys
 from math import ceil
 from multiprocessing import Process
-from os import listdir, system, popen, stat
+from os import listdir, system, popen, stat, chdir
 from os.path import isfile, isdir, isabs, join
 
 # Expected upper-bound conversion time per page in seconds
@@ -73,15 +74,29 @@ def pdf_to_txt(directory):
 
 
 if __name__ == '__main__':
+    # sys.argv[1] must be an absolute path to a file or directory to be spellchecked and autocorrected
     file_path = sys.argv[1]
+
+    # List of files to be spellchecked and autocorrected
+    files_list = []
 
     # Batch processing mode - spellcheck multiple files together
     # Directory path is passed as parameter
     if isdir(file_path):
-        files_converted = pdf_to_txt_subdir(sys.argv)
+        pdf_to_txt_subdir(sys.argv)
+        for file in listdir(file_path):
+            full_file_path = join(directory, file)
+            if isfile(full_file_path) and re.match("^.*[\.]txt$", file):
+                files_list.append(full_file_path)
 
     # Individual file spellcheck mode
     elif isfile(file_path):
         pass
-    print(files_converted)
+
+    chdir("src/")
+    system("make")
+    for file in files_list:
+
+        cmd_autocorrect =
+
     sys.exit()
