@@ -10,8 +10,7 @@
 
 ### Running spellchecker
 
-    $ cd spell-check/src
-    $ ./spellchecker /path/to/file/file_to_be_checked.txt
+    $ spellcheck /path/to/file/file_to_be_checked
 
 ### Output
 
