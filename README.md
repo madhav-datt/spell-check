@@ -6,7 +6,7 @@
 
     $ wget -P ~/Downloads https://github.com/madhav-datt/spell-check/archive/v2.0.zip
     $ unzip ~/Downloads/spell-check-2.0.zip
-    $ mv ~/Downloads/super-focus-superfocus-v2.0 ~/Downloads/spell-check
+    $ mv ~/Downloads/spell-check-2.0 ~/Downloads/spell-check
     $ chmod +x spell-check/install
     $ sudo spell-check/install
 
