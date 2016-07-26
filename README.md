@@ -18,6 +18,8 @@ $ sudo spell-check/install
 $ spellcheck /path/to/file/file_to_be_checked
 ```
 
+The program supports spellchecking and auto-correct for txt files and PDF files. You could also batch process multiple files inside a directory.
+
 ![Sample spell-check usage](https://github.com/madhav-datt/spell-check/blob/master/resources/usage.png)
 
 ### Output
