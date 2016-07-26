@@ -18,6 +18,8 @@ $ sudo spell-check/install
 $ spellcheck /path/to/file/file_to_be_checked
 ```
 
+![Sample spell-check usage](https://github.com/madhav-datt/spell-check/blob/master/resources/usage.png)
+
 ### Output
 
 The program will output a list of all the misspelled words along with suggested corrections, and file checking benchmarks.
