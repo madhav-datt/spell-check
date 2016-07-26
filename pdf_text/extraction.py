@@ -8,13 +8,13 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 
+from __future__ import print_function
 import re
 import sys
 from math import ceil
 from multiprocessing import Process
 from os import listdir, system, popen, stat, chdir
 from os.path import isfile, isdir, isabs, join
-from __future__ import print_function
 
 # Expected upper-bound conversion time per page in seconds
 page_time = 0.457
