@@ -3,6 +3,9 @@
 # Contains methods to extract from PDFs, tokenize and POS tag sentences
 # Uses multi-threading for performance purposes
 #
+# Copyright (C)   2016    Madhav Datt
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 
 import re
 import sys
@@ -16,7 +19,7 @@ page_time = 0.457
 default_kill_time = 30
 
 
-def pdf_to_txt(directory):
+def pdf_to_txt(directory_path):
     """
     Extract text from all PDFs from directory to text files in the same directory
     :param directory: Path to directory containing PDFs to be converted. Only absolute paths/hard links only
@@ -26,6 +29,7 @@ def pdf_to_txt(directory):
 
     # Get list of all PDF files in directory
     file_list = []
+    directory = directory_path[1]
 
     for file in listdir(directory):
         if isfile(join(directory, file)) and re.match("^.*[\.]pdf$", file):
@@ -41,7 +45,7 @@ def pdf_to_txt(directory):
                 continue
 
             # Convert PDF to txt with call to pdf2txt.py script
-            cmd_pdf2txt = "python2.6 src/to_text/pdf2txt.py -o {directory_path}/{txt_file_name} " \
+            cmd_pdf2txt = "python2.7 src/to_text/pdf2txt.py -o {directory_path}/{txt_file_name} " \
                           "-t text {pdf_file_name} 2>/dev/null".format(directory_path=directory,
                                                                        txt_file_name=file_name,
                                                                        pdf_file_name=pdf_file_path)
@@ -73,33 +77,6 @@ def pdf_to_txt(directory):
                     system("rm -f {txt_file_name}".format(txt_file_name=file_name))
             except Exception:
                 pass
-
-    return file_list
-
-
-def pdf_to_txt_subdir(directory_path):
-    """
-    Extract text from all PDFs from directory to text files in the same directory.
-    Continue process down to sub-directories
-    :param directory_path: Path to directory containing PDFs to be converted. Only absolute paths/hard links only
-    :return file_list: List of paths to created txt files
-    :return count: Number of files converted to text
-    """
-
-    # Get list of all PDF files in directory
-    file_list = []
-    directory = directory_path[1]
-
-    # Check for absolute path
-    if not isabs(directory):
-        return None
-
-    # Change to sub-directories
-    for file in listdir(directory):
-        if isdir(join(directory, file)):
-            print(file)
-            tmp_list = pdf_to_txt(join(directory, file))
-            file_list += tmp_list
 
     return file_list
 
