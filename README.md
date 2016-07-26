@@ -4,19 +4,19 @@
 ## Checking Documents
 ### Download and Install from source
 
-'''shell
+```shell
 $ wget -P ~/Downloads https://github.com/madhav-datt/spell-check/archive/v2.0.zip
 $ unzip ~/Downloads/spell-check-2.0.zip
 $ mv ~/Downloads/spell-check-2.0 ~/Downloads/spell-check
 $ chmod +x spell-check/install
 $ sudo spell-check/install
-'''
+```
 
 ### Running spellchecker
 
-'''shell
+```shell
 $ spellcheck /path/to/file/file_to_be_checked
-'''
+```
 
 ### Output
 
