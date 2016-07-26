@@ -36,7 +36,7 @@ def convert_single_file(directory, file):
     # Skip files if "pdf_name.txt" already exists
     # Assume previous conversion attempt successful
     if isfile(txt_file_path) and stat(txt_file_path).st_size > 0:
-        continue
+        return
 
     # Convert PDF to txt with call to pdf2txt.py script
     cmd_pdf2txt = "python2.7 src/to_text/pdf2txt.py -o {directory_path}/{txt_file_name} " \
