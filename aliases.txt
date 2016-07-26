@@ -1,0 +1,2 @@
+# Alias to run spellcheck from command line
+alias spellcheck='python /etc/spell-check/pdf_text/extraction.py'
