@@ -19,17 +19,12 @@ page_time = 0.457
 default_kill_time = 30
 
 
-def pdf_to_txt(directory_path):
+def pdf_to_txt(directory):
     """
     Extract text from all PDFs from directory to text files in the same directory
     :param directory: Path to directory containing PDFs to be converted. Only absolute paths/hard links only
-    :return file_list: List of paths to created txt files
     :return count: Number of files converted t.o text
     """
-
-    # Get list of all PDF files in directory
-    file_list = []
-    directory = directory_path[1]
 
     for file in listdir(directory):
         if isfile(join(directory, file)) and re.match("^.*[\.]pdf$", file):
@@ -37,7 +32,6 @@ def pdf_to_txt(directory_path):
             file_name = file[0:len(file) - 4] + ".txt"
             pdf_file_path = join(directory, file)
             txt_file_path = join(directory, file_name)
-            file_list.append(txt_file_path)
 
             # Skip files if "pdf_name.txt" already exists
             # Assume previous conversion attempt successful
@@ -73,15 +67,21 @@ def pdf_to_txt(directory_path):
                 if converter_process.is_alive():
                     converter_process.terminate()
                     converter_process.join()
-                    file_list.remove(txt_file_path)
                     system("rm -f {txt_file_name}".format(txt_file_name=file_name))
             except Exception:
                 pass
 
-    return file_list
-
 
 if __name__ == '__main__':
-    files_converted = pdf_to_txt_subdir(sys.argv)
+    file_path = sys.argv[1]
+
+    # Batch processing mode - spellcheck multiple files together
+    # Directory path is passed as parameter
+    if isdir(file_path):
+        files_converted = pdf_to_txt_subdir(sys.argv)
+
+    # Individual file spellcheck mode
+    elif isfile(file_path):
+        pass
     print(files_converted)
     sys.exit()
