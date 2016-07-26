@@ -4,15 +4,13 @@
 ## Checking Documents
 ### Download and Install from source
 
-    $ wget https://github.com/madhav-datt/spell-check/archive/spell-check-v2.0.zip
-    $ unzip spell-check-v2.0.zip
-    $ rm -f spell-check-v2.0.zip
-    $ cd spell-check-v2.0/src
+    $ git clone https://github.com/madhav-datt/spell-check.git
+    $ cd spell-check/src
     $ make
 
 ### Running spellchecker
 
-    $ cd spell-check-v2.0/src
+    $ cd spell-check/src
     $ ./spellchecker /path/to/file/file_to_be_checked.txt
 
 ### Output

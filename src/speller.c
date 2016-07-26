@@ -10,13 +10,6 @@
  *
  */
 
-/**
- * TODO:
- * 1. Implement automatic replacement of misspelled words with corrected spellings in text file. 
- * 2. Add text from files checked by user into word data. Process and update word frequency file.
- *
- */
-
 #include <ctype.h>
 #include <stdio.h>
 #include <sys/resource.h>
