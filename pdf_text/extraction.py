@@ -11,6 +11,7 @@
 from __future__ import print_function
 
 import re
+import os
 import sys
 from math import ceil
 from multiprocessing import Process
@@ -111,10 +112,12 @@ if __name__ == '__main__':
 
     # Individual file spellcheck mode
     elif isfile(file_path):
-        file_extension = file_path[-4:]
+        filename, file_extension = os.path.splitext(file_path)
         if file_extension == ".pdf":
             files_list = [convert_single_file("/", file_path)]
         elif file_extension == ".txt":
+            files_list = [file_path]
+        elif file_extension == ".md":
             files_list = [file_path]
         else:
             print("File type not supported. Run spellcheck --help for usage instructions")
@@ -123,6 +126,7 @@ if __name__ == '__main__':
     # Unrecognized/unsupported argument passed
     else:
         print("Usage: spellcheck /path/to/file_name.txt")
+        print("Usage: spellcheck /path/to/file_name.md")
         print("Usage: spellcheck /path/to/file_name.pdf")
         print("Usage: spellcheck /path/to/directory_name")
 
