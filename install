@@ -7,18 +7,14 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 
-# Move spell-check to /etc
-cd /etc
-mkdir spell-check
-mv ~/Downloads/spell-check/* /etc/spell-check
-cd /etc/spell-check
+# Move spell-check to /opt
+mkdir /opt/spell-check
+mv $1/spell-check/* /opt/spell-check
+cd /opt/spell-check
 
 # Add permanent aliases for scripts
 cat aliases.txt >> ~/.bash_aliases
 . ~/.bashrc
-
-# Clean downloaded folders
-rm -rf ~/Downloads/spell-check
 
 # Compile C source code
 cd src
